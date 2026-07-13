@@ -1,5 +1,5 @@
 ---
-name: minimax-context-test
+name: context-test
 description: "MiniMax M2.5/M2.7 模型上下文测试套件，支持 Recall、筛选、数学、代码、推理多维度测试。触发词：MiniMax 测试、上下文测试、minimax-context-testing"
 ---
 

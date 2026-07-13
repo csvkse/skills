@@ -1,5 +1,5 @@
 ---
-name: minimax-api-call
+name: api-call
 description: "MiniMax API 调用指南，包含 M2.5/M2.7 模型选择、Python 调用示例、错误处理与性能对比。触发词：MiniMax API、调用 MiniMax、minimax-api"
 ---
 

@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
 MiniMax 高难度区分测试套件 (v1.0)
 用于区分 M2.5 和 M2.7 的能力差异

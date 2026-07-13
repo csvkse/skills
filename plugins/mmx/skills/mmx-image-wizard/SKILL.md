@@ -33,10 +33,10 @@ metadata:
 mmx-image gen "日落海边，cinematic"
 
 # 人物风格转换（保持同一人物特征）
-mmx-image i2i "同一人穿上汉服" /path/to/photo.jpg --out /tmp/hanfu.png
+mmx-image i2i "同一人穿上汉服" /path/to/photo.jpg --out ./hanfu.png
 
 # 多张变体
-mmx-image gen "动漫风女孩" -n 3 --out /tmp/girls.png
+mmx-image gen "动漫风女孩" -n 3 --out ./girls.png
 ```
 
 ## 核心参数（mmx image CLI 正确版本）

@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
 MiniMax 综合测试套件 (v3.1)
 包含：长文本测试 + 筛选 + 数学 + 代码 + 推理

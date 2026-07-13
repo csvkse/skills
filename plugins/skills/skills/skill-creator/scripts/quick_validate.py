@@ -1,13 +1,36 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
 Quick validation script for skills - minimal version
 """
 
+import argparse
 import sys
 import os
 import re
-import yaml
 from pathlib import Path
+
+
+def _parse_frontmatter(text):
+    """Parse flat top-level frontmatter keys via stdlib (no external deps).
+
+    Only top-level `key: value` lines are captured; nested/indented block
+    content is skipped. Sufficient for quick validation of name/description.
+    """
+    result = {}
+    for line in text.splitlines():
+        if not line.strip() or line.lstrip().startswith('#'):
+            continue
+        if line[0] in (' ', '\t', '-'):
+            continue
+        if ':' not in line:
+            continue
+        k, _, v = line.partition(':')
+        k, v = k.strip(), v.strip()
+        if len(v) >= 2 and v[0] in "\"'" and v[-1] == v[0]:
+            v = v[1:-1]
+        result[k] = v
+    return result
 
 def validate_skill(skill_path):
     """Basic validation of a skill"""
@@ -19,7 +42,7 @@ def validate_skill(skill_path):
         return False, "SKILL.md not found"
 
     # Read and validate frontmatter
-    content = skill_md.read_text()
+    content = skill_md.read_text(encoding="utf-8")
     if not content.startswith('---'):
         return False, "No YAML frontmatter found"
 
@@ -30,13 +53,10 @@ def validate_skill(skill_path):
 
     frontmatter_text = match.group(1)
 
-    # Parse YAML frontmatter
-    try:
-        frontmatter = yaml.safe_load(frontmatter_text)
-        if not isinstance(frontmatter, dict):
-            return False, "Frontmatter must be a YAML dictionary"
-    except yaml.YAMLError as e:
-        return False, f"Invalid YAML in frontmatter: {e}"
+    # Parse frontmatter via stdlib (no external deps)
+    frontmatter = _parse_frontmatter(frontmatter_text)
+    if not isinstance(frontmatter, dict):
+        return False, "Frontmatter must be a YAML dictionary"
 
     # Define allowed properties
     ALLOWED_PROPERTIES = {'name', 'description', 'license', 'allowed-tools', 'metadata', 'compatibility'}
@@ -94,10 +114,10 @@ def validate_skill(skill_path):
     return True, "Skill is valid!"
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("Usage: python quick_validate.py <skill_directory>")
-        sys.exit(1)
-    
-    valid, message = validate_skill(sys.argv[1])
+    parser = argparse.ArgumentParser(description="Quick-validate a skill")
+    parser.add_argument("skill_directory", help="path to skill directory")
+    args = parser.parse_args()
+
+    valid, message = validate_skill(args.skill_directory)
     print(message)
     sys.exit(0 if valid else 1)

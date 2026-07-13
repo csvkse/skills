@@ -94,68 +94,12 @@ When the user asks to create or start a wiki:
 1. Use `WIKI_PATH` env var if set, otherwise `~/.agents/wiki` as the wiki path
 2. Create the directory structure above
 3. Ask the user what domain the wiki covers — be specific
-4. Write `SCHEMA.md` customized to the domain (see template below)
+4. Write `SCHEMA.md` customized to the domain (see `references/schema-template.md`)
 5. Write initial `index.md` with sectioned header
 6. Write initial `log.md` with creation entry
 7. Confirm the wiki is ready and suggest first sources to ingest
 
-### SCHEMA.md Template
-
-Adapt to the user's domain. The schema constrains agent behavior and ensures consistency:
-
-```markdown
-# Wiki Schema
-
-## Domain
-[What this wiki covers — e.g., "AI/ML research", "personal health", "startup intelligence"]
-
-## Conventions
-- File names: lowercase, hyphens, no spaces (e.g., `transformer-architecture.md`)
-- Every wiki page starts with YAML frontmatter (see below)
-- Use `[[wikilinks]]` to link between pages (minimum 2 outbound links per page)
-- When updating a page, always bump the `updated` date
-- Every new page must be added to `index.md` under the correct section
-- Every action must be appended to `log.md`
-- **Provenance markers:** On pages that synthesize 3+ sources, append `^[raw/articles/source-file.md]`
-  at the end of paragraphs whose claims come from a specific source. This lets a reader trace each
-  claim back without re-reading the whole raw file. Optional on single-source pages where the
-  `sources:` frontmatter is enough.
-
-## Frontmatter
-  ```yaml
-  ---
-  title: Page Title
-  created: YYYY-MM-DD
-  updated: YYYY-MM-DD
-  type: entity | concept | comparison | query | summary
-  tags: [from taxonomy below]
-  sources: [raw/articles/source-name.md]
-  # Optional quality signals:
-  confidence: high | medium | low        # how well-supported the claims are
-  contested: true                        # set when the page has unresolved contradictions
-  contradictions: [other-page-slug]      # pages this one conflicts with
-  ---
-  ```
-
-`confidence` and `contested` are optional but recommended for opinion-heavy or fast-moving
-topics. Lint surfaces `contested: true` and `confidence: low` pages for review so weak claims
-don't silently harden into accepted wiki fact.
-
-### raw/ Frontmatter
-
-Raw sources ALSO get a small frontmatter block so re-ingests can detect drift:
-
-```yaml
----
-source_url: https://example.com/article   # original URL, if applicable
-ingested: YYYY-MM-DD
-sha256: <hex digest of the raw content below the frontmatter>
----
-```
-
-The `sha256:` lets a future re-ingest of the same URL skip processing when content is unchanged,
-and flag drift when it has changed. Compute over the body only (everything after the closing
-`---`), not the frontmatter itself.
+Schema 与 frontmatter 模板见 `references/schema-template.md`（初始化 wiki 时按需加载）。
 
 ## Tag Taxonomy
 [Define 10-20 top-level tags for the domain. Add new tags here BEFORE using them.]

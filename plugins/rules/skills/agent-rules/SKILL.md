@@ -17,7 +17,6 @@ live under `Ops/`.
 | 文件 | 适用场景 |
 |------|----------|
 | Core/DotNetRules.md | C# / .NET 项目（框架级架构与边界） |
-| Core/DotNetLibrary.md | C# 类库设计（扩展点、Options、上下文对象、特性发现） |
 | Languages/CSharp.md | C# 语言、命名、async、异常、现代语法 |
 | Languages/Rust.md | Rust 语言与项目约束 |
 | Languages/Go.md | Go 语言与项目约束 |
@@ -70,6 +69,8 @@ For platform-specific target-file routing and precedence, read:
 - `References/Platforms/HermesAgent.md`
 - `References/Platforms/GeminiCLI.md`
 
+Platform config example: `References/Config/opencode.json` (OpenCode 权限配置示例). Historical rule versions live under `References/Rules/Archived/`（存档，默认不加载，仅供参考）.
+
 For workflow-stage routing, use:
 
 - `References/Rules/Responsibilities/Planning/` for analysis, todo planning, UI design, and feature design
@@ -107,7 +108,7 @@ Scan the project, infer the stack, and write the minimum useful rules without ex
 
 | 检测条件 | 自动选用规则 |
 |----------|-------------|
-| 存在 `*.csproj`，且 `OutputType` 为 `Library` 或无 `Startup`/`Program` 入口 | DotNetRules + DotNetLibrary |
+| 存在 `*.csproj`，且 `OutputType` 为 `Library` 或无 `Startup`/`Program` 入口 | DotNetRules |
 | 存在 `*.csproj`（其他） | DotNetRules + BackendRules |
 | 存在 `package.json` 且含 `vue` | VueRules |
 | 存在 `Dockerfile` | BuildRules |
@@ -172,12 +173,14 @@ D) 仅查看 - 显示当前内容，不做任何修改
 
 ## Shortcuts
 
-| 命令 | 说明 |
-|------|------|
-| `/agent-rules` | 启动向导（自动检测环境和技术栈） |
-| `/agent-rules list` | 列出所有可用规则模板 |
-| `/agent-rules add <规则名>` | 直接添加指定规则（跳过检测） |
-| `/agent-rules show` | 显示当前项目约束内容 |
+向本 skill 发出以下自然语言请求即可触发对应行为（非斜杠命令）：
+
+| 调用方式 | 说明 |
+|----------|------|
+| agent-rules | 启动向导（自动检测环境和技术栈） |
+| agent-rules list | 列出所有可用规则模板 |
+| agent-rules add <规则名> | 直接添加指定规则（跳过检测） |
+| agent-rules show | 显示当前项目约束内容 |
 
 ## Guardrails
 

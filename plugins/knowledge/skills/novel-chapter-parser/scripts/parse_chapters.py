@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
 批量处理小说章节
 用法: /parse-chapters <起始章> <结束章> <小说原文路径> [知识库路径]
 """
 
+import argparse
 import os
 import sys
 import logging
@@ -106,20 +108,17 @@ def batch_parse_chapters(start_chapter: int, end_chapter: int, source_path: str,
 
 def main():
     """命令行入口"""
-    if len(sys.argv) < 4:
-        print("用法: python parse_chapters.py <起始章> <结束章> <小说原文路径> [知识库路径]")
-        print("示例: python parse_chapters.py 1 10 ./novel.txt ./novel-knowledge-base")
-        sys.exit(1)
+    parser = argparse.ArgumentParser(description="批量解析小说章节")
+    parser.add_argument("start_chapter", type=int, help="起始章")
+    parser.add_argument("end_chapter", type=int, help="结束章")
+    parser.add_argument("source_path", help="小说原文路径")
+    parser.add_argument("kb_path", nargs="?", default=None, help="知识库路径")
+    args = parser.parse_args()
 
-    try:
-        start_chapter = int(sys.argv[1])
-        end_chapter = int(sys.argv[2])
-    except ValueError:
-        print("错误: 章节号必须是整数")
-        sys.exit(1)
-
-    source_path = sys.argv[3]
-    kb_path = sys.argv[4] if len(sys.argv) > 4 else None
+    start_chapter = args.start_chapter
+    end_chapter = args.end_chapter
+    source_path = args.source_path
+    kb_path = args.kb_path
 
     # 检查源文件是否存在
     if not Path(source_path).exists():

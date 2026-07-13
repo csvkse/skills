@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
 Skill Packager - Creates a distributable .skill file of a skill folder
 
@@ -10,6 +11,7 @@ Example:
     python utils/package_skill.py skills/public/my-skill ./dist
 """
 
+import argparse
 import fnmatch
 import sys
 import zipfile
@@ -109,15 +111,13 @@ def package_skill(skill_path, output_dir=None):
 
 
 def main():
-    if len(sys.argv) < 2:
-        print("Usage: python utils/package_skill.py <path/to/skill-folder> [output-directory]")
-        print("\nExample:")
-        print("  python utils/package_skill.py skills/public/my-skill")
-        print("  python utils/package_skill.py skills/public/my-skill ./dist")
-        sys.exit(1)
+    parser = argparse.ArgumentParser(description="Package a skill folder into a .skill file")
+    parser.add_argument("skill_path", help="path/to/skill-folder")
+    parser.add_argument("output_dir", nargs="?", default=None, help="output directory")
+    args = parser.parse_args()
 
-    skill_path = sys.argv[1]
-    output_dir = sys.argv[2] if len(sys.argv) > 2 else None
+    skill_path = args.skill_path
+    output_dir = args.output_dir
 
     print(f"📦 Packaging skill: {skill_path}")
     if output_dir:

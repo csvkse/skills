@@ -75,7 +75,7 @@ digraph {
 mmx image generate \
   --prompt "A majestic white wolf in a snowy forest, ethereal, photorealistic" \
   --aspect-ratio 16:9 \
-  --out /tmp/wolf.jpg \
+  --out ./wolf.jpg \
   --quiet
 
 # 批量生成（--out-dir + auto-naming）
@@ -90,7 +90,7 @@ mmx image generate \
 mmx image generate \
   --prompt "Banner background, abstract blue gradient" \
   --width 1920 --height 1080 \
-  --out /tmp/banner.png \
+  --out ./banner.png \
   --quiet
 
 # 可复现（seed 相同则结果相同）
@@ -98,7 +98,7 @@ mmx image generate \
   --prompt "A castle on a cliff at sunset" \
   --seed 42 \
   --aspect-ratio 16:9 \
-  --out /tmp/castle.jpg \
+  --out ./castle.jpg \
   --quiet
 
 # ⚠️ 角色一致性（character reference）— 格式必须是 type=character,image=<路径>
@@ -107,7 +107,7 @@ mmx image generate \
   --prompt "The character sits in a cafe, reading a book, warm light" \
   --subject-ref "type=character,image=character.jpg" \
   --aspect-ratio 1:1 \
-  --out /tmp/person.jpg \
+  --out ./person.jpg \
   --quiet
 
 # Prompt 优化
@@ -115,7 +115,7 @@ mmx image generate \
   --prompt "sunset" \
   --prompt-optimizer \
   --aspect-ratio 16:9 \
-  --out /tmp/sunset.jpg \
+  --out ./sunset.jpg \
   --quiet
 ```
 

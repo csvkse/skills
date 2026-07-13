@@ -1,9 +1,11 @@
+# -*- coding: utf-8 -*-
 """
 处理单章小说
 
 用法: /parse-chapter <章节号> <小说原文路径>
 """
 
+import argparse
 import os
 import sys
 import re
@@ -518,14 +520,15 @@ class ChapterParser:
 
 def main():
     """命令行入口"""
-    if len(sys.argv) < 3:
-        print("用法: python parse_chapter.py <章节号> <小说原文路径> [知识库路径]")
-        print("示例: python parse_chapter.py 1 ./novel.txt ./知识库")
-        sys.exit(1)
-    
-    chapter_num = int(sys.argv[1])
-    source_path = sys.argv[2]
-    kb_path = sys.argv[3] if len(sys.argv) > 3 else os.getcwd()
+    parser = argparse.ArgumentParser(description="解析单章小说")
+    parser.add_argument("chapter_num", type=int, help="章节号")
+    parser.add_argument("source_path", help="小说原文路径")
+    parser.add_argument("kb_path", nargs="?", default=os.getcwd(), help="知识库路径（默认当前目录）")
+    args = parser.parse_args()
+
+    chapter_num = args.chapter_num
+    source_path = args.source_path
+    kb_path = args.kb_path
     
     # 查找知识库
     kb_dir = Path(kb_path)

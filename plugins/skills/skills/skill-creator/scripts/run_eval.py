@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """Run trigger evaluation for a skill description.
 
 Tests whether a skill's description causes Claude to trigger (read the skill)
@@ -8,9 +9,10 @@ for a set of queries. Outputs results as JSON.
 import argparse
 import json
 import os
-import select
+import queue
 import subprocess
 import sys
+import threading
 import time
 import uuid
 from concurrent.futures import ProcessPoolExecutor, as_completed
@@ -65,7 +67,7 @@ def run_single_query(
             f"# {skill_name}\n\n"
             f"This skill handles: {skill_description}\n"
         )
-        command_file.write_text(command_content)
+        command_file.write_text(command_content, encoding="utf-8")
 
         cmd = [
             "claude",
@@ -97,20 +99,28 @@ def run_single_query(
         pending_tool_name = None
         accumulated_json = ""
 
-        try:
-            while time.time() - start_time < timeout:
-                if process.poll() is not None:
-                    remaining = process.stdout.read()
-                    if remaining:
-                        buffer += remaining.decode("utf-8", errors="replace")
-                    break
+        # Cross-platform non-blocking read: a worker thread drains stdout into a
+        # queue. select() does not work on Windows pipes.
+        out_queue = queue.Queue()
 
-                ready, _, _ = select.select([process.stdout], [], [], 1.0)
-                if not ready:
-                    continue
-
+        def _drain_stdout():
+            while True:
                 chunk = os.read(process.stdout.fileno(), 8192)
                 if not chunk:
+                    break
+                out_queue.put(chunk)
+            out_queue.put(None)  # EOF sentinel
+
+        reader = threading.Thread(target=_drain_stdout, daemon=True)
+        reader.start()
+
+        try:
+            while time.time() - start_time < timeout:
+                try:
+                    chunk = out_queue.get(timeout=1.0)
+                except queue.Empty:
+                    continue
+                if chunk is None:
                     break
                 buffer += chunk.decode("utf-8", errors="replace")
 
@@ -269,7 +279,7 @@ def main():
     parser.add_argument("--verbose", action="store_true", help="Print progress to stderr")
     args = parser.parse_args()
 
-    eval_set = json.loads(Path(args.eval_set).read_text())
+    eval_set = json.loads(Path(args.eval_set).read_text(encoding="utf-8"))
     skill_path = Path(args.skill_path)
 
     if not (skill_path / "SKILL.md").exists():

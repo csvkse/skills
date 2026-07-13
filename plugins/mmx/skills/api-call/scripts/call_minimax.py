@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
 MiniMax API 调用脚本
 用法: python3 call_minimax.py --model MiniMax-M2.5 --prompt "你的问题"
@@ -14,7 +15,7 @@ API_URL = "https://api.minimaxi.com/v1/chat/completions"
 
 def load_api_key(env_path: str = '/root/.hermes/.env') -> str:
     """从环境变量文件读取 API Key"""
-    with open(env_path, 'r') as f:
+    with open(env_path, 'r', encoding='utf-8') as f:
         for line in f:
             if line.startswith('MINIMAX_CN_API_KEY='):
                 key = line.split('=', 1)[1].strip().strip('"').strip("'")

@@ -1,9 +1,11 @@
+# -*- coding: utf-8 -*-
 """
 初始化小说知识库
 
 用法: /init-novel <小说名称>
 """
 
+import argparse
 import os
 import sys
 from pathlib import Path
@@ -65,13 +67,11 @@ def print_structure(structure: dict, prefix: str = ""):
 
 def main():
     """命令行入口"""
-    if len(sys.argv) < 2:
-        print("用法: python init_novel.py <小说名称>")
-        print("示例: python init_novel.py 诡秘之主")
-        sys.exit(1)
-    
-    novel_name = sys.argv[1]
-    create_knowledge_base(novel_name)
+    parser = argparse.ArgumentParser(description="初始化小说知识库")
+    parser.add_argument("novel_name", help="小说名称")
+    args = parser.parse_args()
+
+    create_knowledge_base(args.novel_name)
 
 
 if __name__ == "__main__":
