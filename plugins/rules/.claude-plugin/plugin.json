@@ -1,0 +1,21 @@
+{
+  "name": "rules",
+  "version": "1.0.0",
+  "description": "Agent 规则与最佳实践：创建/更新/合并项目级 AI 指令文件（CLAUDE.md / AGENTS.md）",
+  "author": {
+    "name": "csvkse",
+    "url": "https://github.com/csvkse"
+  },
+  "homepage": "https://github.com/csvkse/skills/tree/main/plugins/rules",
+  "repository": "https://github.com/csvkse/skills",
+  "license": "MIT",
+  "keywords": [
+    "rules",
+    "agent-rules",
+    "claude-md",
+    "agents-md",
+    "best-practices",
+    "claude-code"
+  ],
+  "skills": "./skills/"
+}

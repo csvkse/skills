@@ -5,75 +5,27 @@
   },
   "plugins": [
     {
-      "name": "minimax-api",
-      "source": "./plugins/minimax-api",
-      "description": "MiniMax M2.5/M2.7 API 调用指南",
-      "version": "1.0.0"
-    },
-    {
-      "name": "minimax-testing",
-      "source": "./plugins/minimax-testing",
-      "description": "MiniMax 模型上下文测试套件",
-      "version": "1.0.0"
-    },
-    {
-      "name": "novel-chapter-parser",
-      "source": "./plugins/novel-chapter-parser",
-      "description": "小说章节解析器，知识库自动构建",
-      "version": "2.1.0"
-    },
-    {
-      "name": "plugin-standardizer",
-      "source": "./plugins/plugin-standardizer",
-      "description": "插件格式标准化工具",
-      "version": "1.0.0"
-    },
-    {
-      "name": "auto-fixer",
-      "source": "./plugins/auto-fixer",
-      "description": "自动检测并修复插件结构问题",
-      "version": "1.0.0"
-    },
-    {
-      "name": "agent-rules",
-      "source": "./plugins/agent-rules",
-      "description": "Agent 规则与最佳实践",
+      "name": "mmx",
+      "source": "./plugins/mmx",
+      "description": "MiniMax 全套技能包：图片、视频、音乐、语音、API、测试、代码搜索等",
       "version": "1.0.0"
     },
     {
       "name": "knowledge",
       "source": "./plugins/knowledge",
-      "description": "通用记忆库管理",
+      "description": "知识库管理：通用记忆库、LLM Wiki、小说章节解析",
       "version": "1.0.0"
     },
     {
-      "name": "llm-wiki",
-      "source": "./plugins/llm-wiki",
-      "description": "LLM Wiki 知识库管理",
+      "name": "skills",
+      "source": "./plugins/skills",
+      "description": "插件开发工具：自动修复、标准化、Skill 创建、同步、链接",
       "version": "1.0.0"
     },
     {
-      "name": "mmx",
-      "source": "./plugins/mmx",
-      "description": "MiniMax 全套技能包：图片、视频、音乐、语音、代码搜索等",
-      "version": "1.0.0"
-    },
-    {
-      "name": "skill-creator",
-      "source": "./plugins/skill-creator",
-      "description": "Skill 创建与评估工具",
-      "version": "1.0.0"
-    },
-    {
-      "name": "skills-agentsSync",
-      "source": "./plugins/skills-agentsSync",
-      "description": "Skill 与 Agent 同步工具",
-      "version": "1.0.0"
-    },
-    {
-      "name": "skills-link",
-      "source": "./plugins/skills-link",
-      "description": "Skill 链接管理工具",
+      "name": "rules",
+      "source": "./plugins/rules",
+      "description": "Agent 规则与最佳实践",
       "version": "1.0.0"
     }
   ]

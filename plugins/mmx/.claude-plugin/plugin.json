@@ -1,7 +1,7 @@
 {
   "name": "mmx",
   "version": "1.0.0",
-  "description": "MiniMax 全套技能包：图片生成、图像识别、视频生成、语音合成、音乐生成、歌词分析、代码搜索等",
+  "description": "MiniMax 全套技能包：API 调用、上下文测试、图片/视频/音乐/语音生成、代码搜索等",
   "author": {
     "name": "csvkse",
     "url": "https://github.com/csvkse"
@@ -16,7 +16,10 @@
     "video",
     "music",
     "speech",
+    "api",
+    "testing",
     "claude-code"
   ],
+  "minimum_claude_version": "1.8.0",
   "skills": "./skills/"
 }

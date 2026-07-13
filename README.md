@@ -10,13 +10,12 @@
 
 ## 插件列表
 
-| Plugin | 版本 | 说明 |
-|--------|------|------|
-| [minimax-api](./plugins/minimax-api) | 1.0.0 | MiniMax M2.5/M2.7 API 调用指南 |
-| [minimax-testing](./plugins/minimax-testing) | 1.0.0 | 上下文测试套件，多维度测试 |
-| [novel-chapter-parser](./plugins/novel-chapter-parser) | 2.1.0 | 小说章节解析器，知识库自动构建 |
-| [plugin-standardizer](./plugins/plugin-standardizer) | 1.0.0 | 插件格式标准化工具 |
-| [auto-fixer](./plugins/auto-fixer) | 1.0.0 | 自动检测并修复插件结构问题 |
+| Plugin | 版本 | 说明 | Skills |
+|--------|------|------|--------|
+| [mmx](./plugins/mmx) | 1.0.0 | MiniMax 全套技能包：API、测试、图片/视频/音乐/语音、代码搜索 | 13 |
+| [knowledge](./plugins/knowledge) | 1.0.0 | 知识库管理：通用记忆库、LLM Wiki、小说章节解析 | 3 |
+| [skills](./plugins/skills) | 1.0.0 | 插件开发工具：自动修复、标准化、Skill 创建、同步、链接 | 5 |
+| [rules](./plugins/rules) | 1.0.0 | Agent 规则与最佳实践 | 1 |
 
 ---
 
@@ -46,16 +45,15 @@ csvkse/skills/
 ├── docs/                         # 文档目录
 │   └── plugin-types.md           # 插件类型说明
 ├── assets/                       # 资源文件
-└── plugins/                      # 插件目录
-    ├── minimax-api/
-    ├── minimax-testing/
-    ├── novel-chapter-parser/
-    │   └── commands/
-    │       └── init-novel.md     # 初始化小说知识库
-    ├── plugin-standardizer/
-    │   └── commands/
-    │       └── standardize-plugin.md
-    └── auto-fixer/
+└── plugins/                      # 插件目录（4 个插件）
+    ├── mmx/                      # MiniMax 全套技能包（13 skills）
+    │   └── skills/
+    ├── knowledge/                # 知识库管理（3 skills）
+    │   └── skills/
+    ├── skills/                   # 插件开发工具（5 skills）
+    │   └── skills/
+    └── rules/                    # Agent 规则与最佳实践（1 skill）
+        └── skills/
 ```
 
 ---
@@ -79,7 +77,7 @@ csvkse/skills/
 npx skills add csvkse/skills
 
 # 安装特定插件
-npx skills add csvkse/skills/plugins/novel-chapter-parser
+npx skills add csvkse/skills/plugins/knowledge
 
 # 更新插件
 npx skills update csvkse/skills
@@ -92,12 +90,13 @@ npx skills update csvkse/skills
 /plugin marketplace add csvkse/skills
 
 # 按需安装单个插件
-/plugin install novel-chapter-parser@csvkse
-/plugin install plugin-standardizer@csvkse
-/plugin install auto-fixer@csvkse
+/plugin install mmx@csvkse
+/plugin install knowledge@csvkse
+/plugin install skills@csvkse
+/plugin install rules@csvkse
 
 # 更新插件
-/plugin update novel-chapter-parser@csvkse
+/plugin update knowledge@csvkse
 
 # 更新所有插件
 /plugin update --all
@@ -150,8 +149,8 @@ cd skills && git pull
 
 | 命令 | 插件 | 说明 |
 |------|------|------|
-| `/init-novel` | novel-chapter-parser | 初始化小说知识库 |
-| `/standardize-plugin` | plugin-standardizer | 标准化插件格式 |
+| `/init-novel` | knowledge | 初始化小说知识库 |
+| `/standardize-plugin` | skills | 标准化插件格式 |
 
 ---
 
@@ -169,10 +168,10 @@ cd skills && git pull
 
 ```bash
 # /plugin install 方式
-~/.claude/plugins/marketplaces/csvkse-skills/plugins/novel-chapter-parser/
+~/.claude/plugins/marketplaces/csvkse-skills/plugins/knowledge/
 
 # npx skills add 方式
-~/.agents/skills/novel-chapter-parser/
+~/.agents/skills/knowledge/
 ```
 
 ---
@@ -243,7 +242,7 @@ MiniMax M2.5/M2.7 API 调用指南。
 
 ```bash
 # 验证插件结构
-python scripts/validate_plugin.py plugins/novel-chapter-parser
+python scripts/validate_plugin.py plugins/knowledge
 
 # 扫描所有插件
 python scripts/scan_plugins.py plugins
